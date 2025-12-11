@@ -1,22 +1,23 @@
 # Guide de développement API Habits - NestJS
 
-Ce guide vous accompagne dans la création d'une API CRUD pour un tracker d'habitudes avec NestJS, PostgreSQL, TypeORM et GraphQL.
+Ce guide vous accompagne dans la création d'une API RESTful CRUD pour un tracker d'habitudes avec NestJS, PostgreSQL et TypeORM.
 
 ---
 
 ## Phase 1 : Installation des dépendances
 
-Installez les packages nécessaires pour TypeORM, PostgreSQL et GraphQL.
+Installez les packages nécessaires pour TypeORM et PostgreSQL.
 
 **Commandes à exécuter :**
 ```bash
 npm install @nestjs/typeorm typeorm pg
-npm install @nestjs/graphql @nestjs/apollo @apollo/server graphql
+npm install @nestjs/config
+npm install class-validator class-transformer
 ```
 
 **Documentation :**
 - [NestJS TypeORM](https://docs.nestjs.com/techniques/database)
-- [NestJS GraphQL](https://docs.nestjs.com/graphql/quick-start)
+- [NestJS Validation](https://docs.nestjs.com/techniques/validation)
 
 ---
 
@@ -125,16 +126,24 @@ Configurez TypeORM dans `src/app.module.ts` pour se connecter à PostgreSQL.
 
 ---
 
-## Phase 4 : Configuration de GraphQL
+## Phase 4 : Configuration de la validation globale
 
-Activez GraphQL dans votre application.
+Activez la validation automatique des DTOs dans votre application.
 
 **Ce que vous devez faire :**
-1. Ajoutez `GraphQLModule.forRoot()` dans les imports de votre AppModule
-2. Choisissez le driver Apollo (`ApolloDriver`)
-3. Configurez `autoSchemaFile: true` pour générer automatiquement le schéma GraphQL
+1. Dans le fichier `src/main.ts`, ajoutez un `ValidationPipe` global
+2. Configurez-le avec `whitelist: true` pour supprimer les propriétés non définies
+3. Utilisez `transform: true` pour transformer automatiquement les payloads
 
-**Documentation :** [GraphQL Quick Start](https://docs.nestjs.com/graphql/quick-start#installation)
+**Exemple :**
+```typescript
+app.useGlobalPipes(new ValidationPipe({
+  whitelist: true,
+  transform: true,
+}));
+```
+
+**Documentation :** [NestJS Validation](https://docs.nestjs.com/techniques/validation)
 
 ---
 
@@ -148,14 +157,15 @@ nest generate resource habits
 ```
 
 **Questions de la CLI :**
-- Transport layer ? → **GraphQL (code first)**
+- Transport layer ? → **REST API**
 - Generate CRUD entry points ? → **Yes**
 
 **Fichiers générés :**
 - `habits.module.ts` - Module
 - `habits.service.ts` - Service (logique métier)
-- `habits.resolver.ts` - Resolver (équivalent du controller pour GraphQL)
-- DTOs et Entity de base
+- `habits.controller.ts` - Controller (gère les routes HTTP)
+- DTOs (create-habit.dto.ts, update-habit.dto.ts)
+- Entity de base
 
 **Documentation :** [CLI Generate Command](https://docs.nestjs.com/cli/usages#nest-generate)
 
@@ -167,19 +177,15 @@ Définissez la structure de votre table PostgreSQL dans `src/habits/entities/hab
 
 **Ce que vous devez faire :**
 1. Décorez la classe avec `@Entity()` pour TypeORM
-2. Décorez la classe avec `@ObjectType()` pour GraphQL
-3. Ajoutez les colonnes :
+2. Ajoutez les colonnes :
    - `@PrimaryGeneratedColumn()` pour l'ID
    - `@Column()` pour les autres champs (ex: name, description, frequency)
    - `@CreateDateColumn()` et `@UpdateDateColumn()` pour les timestamps
 
-**Important :** Chaque propriété doit avoir deux décorateurs :
-- Un pour TypeORM (`@Column()`)
-- Un pour GraphQL (`@Field()`)
+**Important :** Avec REST, vous n'avez besoin que des décorateurs TypeORM, pas de décorateurs GraphQL.
 
 **Documentation :**
 - [TypeORM Entities](https://typeorm.io/entities)
-- [GraphQL Object Types](https://docs.nestjs.com/graphql/resolvers#object-types)
 
 ---
 
@@ -212,69 +218,120 @@ Implémentez la logique métier dans `src/habits/habits.service.ts`.
 
 ---
 
-## Phase 9 : Création des DTOs GraphQL
+## Phase 9 : Création des DTOs REST
 
-Définissez la structure des données entrantes.
+Définissez la structure des données entrantes avec validation.
 
 **Ce que vous devez faire :**
-1. Dans `src/habits/dto/create-habit.input.ts` :
-   - Utilisez `@InputType()` au lieu de `@ObjectType()`
-   - Ajoutez les champs avec `@Field()` (sans l'ID)
-2. Dans `src/habits/dto/update-habit.input.ts` :
-   - Étendez `PartialType(CreateHabitInput)`
+1. Dans `src/habits/dto/create-habit.dto.ts` :
+   - Ajoutez les propriétés nécessaires (name, description, etc.)
+   - Utilisez les décorateurs de validation (`@IsString()`, `@IsNotEmpty()`, etc.)
+2. Dans `src/habits/dto/update-habit.dto.ts` :
+   - Étendez `PartialType(CreateHabitDto)` pour rendre tous les champs optionnels
 
-**Documentation :** [GraphQL Mutations](https://docs.nestjs.com/graphql/mutations)
+**Exemple :**
+```typescript
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+
+export class CreateHabitDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
+}
+```
+
+**Documentation :** [NestJS DTOs](https://docs.nestjs.com/controllers#request-payloads)
 
 ---
 
-## Phase 10 : Implémentation du Resolver
+## Phase 10 : Implémentation du Controller
 
-Exposez vos queries et mutations GraphQL dans `src/habits/habits.resolver.ts`.
+Exposez vos endpoints REST dans `src/habits/habits.controller.ts`.
 
 **Ce que vous devez faire :**
-1. Les méthodes avec `@Query()` lisent les données (GET)
-2. Les méthodes avec `@Mutation()` modifient les données (POST/PUT/DELETE)
-3. Chaque méthode appelle le service correspondant
-4. Spécifiez le type de retour GraphQL : `@Query(() => [Habit])`
+1. Les méthodes avec `@Get()` lisent les données
+2. Les méthodes avec `@Post()` créent des données
+3. Les méthodes avec `@Patch()` ou `@Put()` modifient des données
+4. Les méthodes avec `@Delete()` suppriment des données
+5. Utilisez `@Param()` pour les paramètres d'URL et `@Body()` pour le corps de la requête
 
-**Documentation :** [GraphQL Resolvers](https://docs.nestjs.com/graphql/resolvers)
+**Exemple :**
+```typescript
+@Controller('habits')
+export class HabitsController {
+  @Get()
+  findAll() {
+    return this.habitsService.findAll();
+  }
+
+  @Post()
+  create(@Body() createHabitDto: CreateHabitDto) {
+    return this.habitsService.create(createHabitDto);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.habitsService.findOne(+id);
+  }
+}
+```
+
+**Documentation :** [NestJS Controllers](https://docs.nestjs.com/controllers)
 
 ---
 
 ## Phase 11 : Test de votre API
 
-Testez votre API via GraphQL Playground.
+Testez votre API REST avec un client HTTP (Postman, Insomnia, curl, ou extension VSCode REST Client).
 
 **Ce que vous devez faire :**
 1. Lancez l'application : `npm run start:dev`
-2. Ouvrez le GraphQL Playground : `http://localhost:3000/graphql`
-3. Testez vos queries et mutations
+2. Utilisez un client HTTP pour tester vos endpoints
+3. L'API sera disponible sur `http://localhost:3000`
 
-**Exemple de mutation :**
-```graphql
-mutation {
-  createHabit(createHabitInput: {
-    name: "Méditation"
-    description: "10 minutes chaque matin"
-  }) {
-    id
-    name
-  }
+**Exemples de requêtes :**
+
+**GET - Récupérer toutes les habitudes :**
+```
+GET http://localhost:3000/habits
+```
+
+**POST - Créer une nouvelle habitude :**
+```
+POST http://localhost:3000/habits
+Content-Type: application/json
+
+{
+  "name": "Méditation",
+  "description": "10 minutes chaque matin"
 }
 ```
 
-**Exemple de query :**
-```graphql
-query {
-  habits {
-    id
-    name
-    description
-  }
+**GET - Récupérer une habitude spécifique :**
+```
+GET http://localhost:3000/habits/1
+```
+
+**PATCH - Modifier une habitude :**
+```
+PATCH http://localhost:3000/habits/1
+Content-Type: application/json
+
+{
+  "description": "15 minutes chaque matin"
 }
 ```
 
-**Documentation :** [GraphQL Playground](https://docs.nestjs.com/graphql/quick-start#accessing-the-playground)
+**DELETE - Supprimer une habitude :**
+```
+DELETE http://localhost:3000/habits/1
+```
+
+**Documentation :** [Testing REST APIs](https://docs.nestjs.com/controllers#testing)
 
 ---
 
@@ -283,9 +340,10 @@ query {
 - **Entity** : Représente une table dans PostgreSQL
 - **Repository** : Interface pour interagir avec la base de données
 - **Service** : Contient la logique métier
-- **Resolver** : Expose les queries et mutations GraphQL
+- **Controller** : Expose les endpoints REST (routes HTTP)
 - **DTO (Data Transfer Object)** : Valide et structure les données entrantes
 - **Module** : Regroupe et organise les composants liés
+- **Validation Pipe** : Valide automatiquement les données entrantes selon les règles définies dans les DTOs
 
 ---
 
@@ -293,8 +351,9 @@ query {
 
 - [Documentation NestJS](https://docs.nestjs.com/)
 - [Documentation TypeORM](https://typeorm.io/)
-- [Documentation GraphQL](https://graphql.org/)
-- [Documentation Apollo Server](https://www.apollographql.com/docs/apollo-server/)
+- [NestJS Controllers](https://docs.nestjs.com/controllers)
+- [NestJS Validation](https://docs.nestjs.com/techniques/validation)
+- [Class Validator Decorators](https://github.com/typestack/class-validator#validation-decorators)
 
 ---
 

@@ -3,7 +3,9 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { HabitsModule } from './habits/habits.module';
 import configuration from './config/configuration';
+import { Habit } from './habits/entities/habit.entity';
 
 @Module({
   imports: [
@@ -18,9 +20,11 @@ import configuration from './config/configuration';
       username: configuration().database.username,
       password: configuration().database.password,
       database: configuration().database.database,
+      entities: [Habit],
       autoLoadEntities: true,
       synchronize: true,
     }),
+    HabitsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

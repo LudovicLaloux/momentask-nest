@@ -15,7 +15,9 @@ const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const habits_module_1 = require("./habits/habits.module");
 const configuration_1 = __importDefault(require("./config/configuration"));
+const habit_entity_1 = require("./habits/entities/habit.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -33,9 +35,11 @@ exports.AppModule = AppModule = __decorate([
                 username: (0, configuration_1.default)().database.username,
                 password: (0, configuration_1.default)().database.password,
                 database: (0, configuration_1.default)().database.database,
+                entities: [habit_entity_1.Habit],
                 autoLoadEntities: true,
                 synchronize: true,
             }),
+            habits_module_1.HabitsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
