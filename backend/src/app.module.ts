@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { HabitsModule } from './habits/habits.module';
 import configuration from './config/configuration';
 import { Habit } from './habits/entities/habit.entity';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { Habit } from './habits/entities/habit.entity';
       synchronize: true,
     }),
     HabitsModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

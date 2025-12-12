@@ -8,4 +8,6 @@ export default () => ({
     password: process.env.DB_PASSWORD as string,
     database: process.env.DB_NAME as string,
   },
+  jwtExpiration: (process.env.JWT_EXPIRATION || '7d') as string,
+  jwtSecret: process.env.JWT_SECRET,
 });
