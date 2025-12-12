@@ -1,5 +1,5 @@
-import instance from './api'
-import type { AuthResponse, LoginDto, RegisterDto, User } from '../types/auth.types'
+import instance from '@/services/api'
+import type { AuthResponse, LoginDto, RegisterDto, User } from '@/types/auth.types'
 
 export const authApi = {
   register: (data: RegisterDto) => instance.post<AuthResponse>('/auth/register', data),
