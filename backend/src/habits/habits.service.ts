@@ -13,22 +13,23 @@ export class HabitsService {
   ) {}
 
   create(createHabitDto: CreateHabitDto) {
-    return this.habitRepository.save(createHabitDto);
+    const habit = this.habitRepository.create(createHabitDto);
+    return this.habitRepository.save(habit);
   }
 
   findAll() {
     return this.habitRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.habitRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateHabitDto: UpdateHabitDto) {
+  update(id: string, updateHabitDto: UpdateHabitDto) {
     return this.habitRepository.update(id, updateHabitDto);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.habitRepository.delete(id);
   }
 }
