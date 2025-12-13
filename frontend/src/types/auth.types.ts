@@ -4,7 +4,7 @@ export interface User {
   firstname?: string
   lastname?: string
   avatar?: string
-  theme: string
+  theme?: string
 }
 
 export interface RegisterDto {
@@ -21,8 +21,5 @@ export interface LoginDto {
 
 export interface AuthResponse {
   token: string
-  user: {
-    id: string
-    email: string
-  }
+  user: User
 }
