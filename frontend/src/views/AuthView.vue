@@ -6,7 +6,7 @@ import AuthPanel from '@/components/AuthView/AuthPanel.vue'
 <template>
   <v-container fluid class="pa-0 fill-height">
     <v-row no-gutters class="fill-height">
-      <v-col cols="12" md="6" class="d-sm-none d-md-flex flex-grow">
+      <v-col cols="12" md="6" class="d-none d-md-flex flex-grow">
         <BrandingPanel class="w-100"></BrandingPanel>
       </v-col>
 
@@ -18,11 +18,4 @@ import AuthPanel from '@/components/AuthView/AuthPanel.vue'
 </template>
 
 <style scoped>
-.branding-panel {
-  background-color: red;
-}
-
-.auth-panel {
-  background-color: green;
-}
 </style>
