@@ -1,0 +1,19 @@
+{
+  "COMMON": {
+    "MOMENTASK": "Momentask"
+  },
+  "BRANDING_PANEL": {
+    "LICENSE": "2024 Momentask. All rights reserved.",
+    "BRANDING_CAROUSEL": {
+      "TITLE_1": "Follow your habits",
+      "DESCRIPTION_1": "Visualize your daily progress and stay motivated",
+      "IMAGE_1": "mdi-chart-line",
+      "TITLE_2": "Set your goals",
+      "DESCRIPTION_2": "Define clear goals and measure your results",
+      "IMAGE_2": "mdi-target",
+      "TITLE_3": "Analyze your performance",
+      "DESCRIPTION_3": "Detailed statistics to understand your progress",
+      "IMAGE_3": "mdi-chart-bar"
+    }
+  }
+}

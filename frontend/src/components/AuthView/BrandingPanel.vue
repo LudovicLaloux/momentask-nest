@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppLogo from '@/components/common/AppLogo.vue'
+import BrandingCarousel from '@/components/AuthView/BrandingCarousel.vue'
 </script>
 
 <template>
@@ -8,14 +9,10 @@ import AppLogo from '@/components/common/AppLogo.vue'
   >
     <AppLogo size="medium" />
 
-    <!-- Carousel Section (à venir) -->
-    <div class="carousel-section">
-      <p>Carousel ici</p>
-    </div>
+    <BrandingCarousel class="w-100 mx-auto" />
 
-    <!-- Footer -->
     <div class="footer">
-      <p>&copy; 2024 Momentask. Tous droits réservés.</p>
+      <p>&copy; {{ $t('BRANDING_PANEL.LICENSE') }}</p>
     </div>
   </div>
 </template>
@@ -39,5 +36,9 @@ import AppLogo from '@/components/common/AppLogo.vue'
 
 .footer p {
   margin: 0;
+}
+
+.branding-carousel {
+  max-width: 500px;
 }
 </style>

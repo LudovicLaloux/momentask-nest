@@ -25,7 +25,7 @@ const sizeConfig = {
   },
   medium: {
     icon: 48,
-    iconSize: 30,
+    iconSize: 28,
     borderRadius: '12px',
     fontSize: '1.6rem',
     gap: '0.75rem',
@@ -56,7 +56,7 @@ const textStyle = computed(() => ({
     <div class="logo-icon" :style="iconStyle">
       <v-icon :icon="iconType" :size="config.iconSize" color="white" />
     </div>
-    <h1 v-if="props.showText" class="logo-text" :style="textStyle">Momentask</h1>
+    <h1 v-if="props.showText" class="logo-text" :style="textStyle">{{ $t('COMMON.MOMENTASK') }}</h1>
   </div>
 </template>
 
