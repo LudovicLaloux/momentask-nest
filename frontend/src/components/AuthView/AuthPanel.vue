@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import AuthPanelCheckEmail from './checkEmailForm.vue'
 import LogInForm from './logInForm.vue'
 import SignInForm from './signInForm.vue'
-import { ref } from 'vue'
+import { checkEmail } from '@/services/api/auth.api'
 
+const email = ref('')
 const userAlreadyExists = ref<boolean | null>(null)
 
-const continueWithEmail = (userExists: boolean) => {
-  userAlreadyExists.value = userExists
+const checkEmailExists = async () => {
+  const { data } = await checkEmail(email.value)
+  userAlreadyExists.value = data.exists
 }
 </script>
 
@@ -15,10 +18,11 @@ const continueWithEmail = (userExists: boolean) => {
   <div class="auth-panel d-flex flex-column justify-center">
     <AuthPanelCheckEmail
       v-if="userAlreadyExists === null"
-      @continue-with-email="continueWithEmail"
+      v-model="email"
+      @checkEmailExists="checkEmailExists"
     />
-    <LogInForm v-if="userAlreadyExists === true" />
-    <SignInForm v-if="userAlreadyExists === false" />
+    <LogInForm v-if="userAlreadyExists === true" :email="email" />
+    <SignInForm v-if="userAlreadyExists === false" :email="email" />
   </div>
 </template>
 

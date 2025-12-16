@@ -1,25 +1,21 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { checkEmail } from '@/services/api/auth.api'
 
 const { t } = useI18n()
 
-const emits = defineEmits(['continueWithEmail'])
+const emits = defineEmits(['checkEmailExists', 'update:modelValue'])
 
-const email = ref('')
+const props = defineProps<{
+  modelValue: string
+}>()
 
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const isEmailValid = computed(() => {
-  if (!email.value) return false
-  return emailRegex.test(email.value)
+  if (!props.modelValue) return false
+  return emailRegex.test(props.modelValue)
 })
-
-const checkEmailExists = async () => {
-  const { data } = await checkEmail(email.value)
-  emits('continueWithEmail', data.exists)
-}
 </script>
 
 <template>
@@ -31,13 +27,14 @@ const checkEmailExists = async () => {
       <v-text-field
         class="w-100 mt-2"
         rounded="lg"
-        v-model="email"
+        :model-value="props.modelValue"
+        @update:model-value="emits('update:modelValue', $event)"
         :placeholder="`${t('AUTH_PANEL.EMAIL_NAME')}@${t('AUTH_PANEL.EMAIL_EXTENSION')}`"
         density="compact"
         type="email"
         variant="outlined"
         prepend-inner-icon="mdi-email-outline"
-        @keydown.enter="checkEmailExists"
+        @keydown.enter="emits('checkEmailExists')"
       ></v-text-field>
     </div>
     <div class="d-flex flex-column w-100 mt-2 ga-8">
@@ -47,7 +44,7 @@ const checkEmailExists = async () => {
         block
         rounded="lg"
         :disabled="!isEmailValid"
-        @click="checkEmailExists"
+        @click="emits('checkEmailExists')"
       >
         {{ t('COMMON.CONTINUE') }}
       </v-btn>
