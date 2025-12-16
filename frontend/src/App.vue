@@ -6,4 +6,11 @@
   </v-app>
 </template>
 
-<style scoped></style>
+<style>
+* {
+  font-family: 'Inter', sans-serif;
+}
+.v-btn {
+  text-transform: none !important;
+}
+</style>

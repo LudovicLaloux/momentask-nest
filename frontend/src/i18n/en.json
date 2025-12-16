@@ -1,6 +1,8 @@
 {
   "COMMON": {
-    "MOMENTASK": "Momentask"
+    "MOMENTASK": "Momentask",
+    "CONTINUE": "Continue",
+    "OR": "Or"
   },
   "BRANDING_PANEL": {
     "LICENSE": "2024 Momentask. All rights reserved.",
@@ -15,5 +17,13 @@
       "DESCRIPTION_3": "Detailed statistics to understand your progress",
       "IMAGE_3": "mdi-chart-bar"
     }
+  },
+  "AUTH_PANEL": {
+    "WELCOME": "Welcome !",
+    "ENTER_EMAIL": "Enter your email to continue",
+    "EMAIL": "Email",
+    "EMAIL_NAME": "name",
+    "EMAIL_EXTENSION": "example.com",
+    "CONTINUE_GOOGLE": "Continue with Google"
   }
 }

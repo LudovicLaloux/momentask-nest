@@ -23,3 +23,11 @@ export interface AuthResponse {
   token: string
   user: User
 }
+
+export type AuthStep = 'email' | 'login' | 'register'
+
+export interface AuthFlowState {
+  step: AuthStep
+  email: string
+  userExists: boolean
+}
