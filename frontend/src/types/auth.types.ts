@@ -31,3 +31,7 @@ export interface AuthFlowState {
   email: string
   userExists: boolean
 }
+
+export interface CheckEmailResponse {
+  exists: boolean
+}
