@@ -24,6 +24,18 @@
     "EMAIL": "Email",
     "EMAIL_NAME": "name",
     "EMAIL_EXTENSION": "example.com",
-    "CONTINUE_GOOGLE": "Continue with Google"
+    "CONTINUE_GOOGLE": "Continue with Google",
+    "CREATE_ACCOUNT": "Create an account",
+    "START_TRACKING": "Start tracking your habits today",
+    "FIRSTNAME": "First name",
+    "LASTNAME": "Last name",
+    "OPTIONAL": "(optional)",
+    "FIRSTNAME_PLACEHOLDER": "John",
+    "LASTNAME_PLACEHOLDER": "Doe",
+    "PASSWORD": "Password",
+    "PASSWORD_PLACEHOLDER": "••••••••",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
+    "CREATE_ACCOUNT_BUTTON": "Create an account"
   }
 }

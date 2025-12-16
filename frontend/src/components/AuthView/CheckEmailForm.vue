@@ -34,7 +34,7 @@ const isEmailValid = computed(() => {
         type="email"
         variant="outlined"
         prepend-inner-icon="mdi-email-outline"
-        @keydown.enter="emits('checkEmailExists')"
+        @keydown.enter="isEmailValid ? emits('checkEmailExists') : null"
       ></v-text-field>
     </div>
     <div class="d-flex flex-column w-100 mt-2 ga-8">

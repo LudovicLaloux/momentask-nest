@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import AuthPanelCheckEmail from './checkEmailForm.vue'
-import LogInForm from './logInForm.vue'
-import SignInForm from './signInForm.vue'
+import AuthPanelCheckEmail from './CheckEmailForm.vue'
+import LogInForm from './LogInForm.vue'
+import SignInForm from './SignInForm.vue'
 import { checkEmail } from '@/services/api/auth.api'
 
 const email = ref('')
@@ -21,8 +21,16 @@ const checkEmailExists = async () => {
       v-model="email"
       @checkEmailExists="checkEmailExists"
     />
-    <LogInForm v-if="userAlreadyExists === true" :email="email" />
-    <SignInForm v-if="userAlreadyExists === false" :email="email" />
+    <LogInForm
+      v-if="userAlreadyExists === true"
+      :email="email"
+      @goBack="userAlreadyExists = null"
+    />
+    <SignInForm
+      v-if="userAlreadyExists === false"
+      :email="email"
+      @goBack="userAlreadyExists = null"
+    />
   </div>
 </template>
 
