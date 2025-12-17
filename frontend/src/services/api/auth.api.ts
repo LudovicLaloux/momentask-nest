@@ -15,3 +15,10 @@ export const getMe = () => instance.get<User>('/auth/me')
 
 export const checkEmail = (email: string) =>
   instance.post<CheckEmailResponse>('/auth/checkEmail', { email })
+
+export default {
+  register,
+  login,
+  getMe,
+  checkEmail,
+}

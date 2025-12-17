@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import AuthPanelCheckEmail from './CheckEmailForm.vue'
 import LogInForm from './LogInForm.vue'
-import SignInForm from './SignInForm.vue'
+import RegisterForm from './RegisterForm.vue'
 import { checkEmail } from '@/services/api/auth.api'
 
 const email = ref('')
@@ -26,7 +26,7 @@ const checkEmailExists = async () => {
       :email="email"
       @goBack="userAlreadyExists = null"
     />
-    <SignInForm
+    <RegisterForm
       v-if="userAlreadyExists === false"
       :email="email"
       @goBack="userAlreadyExists = null"

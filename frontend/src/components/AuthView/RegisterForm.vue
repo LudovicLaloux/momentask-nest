@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const { t } = useI18n()
 
-const emits = defineEmits(['goBack', 'register'])
+const emits = defineEmits(['goBack'])
 
 const props = defineProps<{
   email: string
 }>()
+
+const authStore = useAuthStore()
 
 // Form fields
 const firstname = ref('')
@@ -32,15 +37,11 @@ const isFormValid = computed(() => {
   )
 })
 
-const handleRegister = () => {
+const handleRegister = async () => {
   if (!isFormValid.value) return
 
-  emits('register', {
-    email: props.email,
-    firstname: firstname.value || undefined,
-    lastname: lastname.value || undefined,
-    password: password.value,
-  })
+  await authStore.register(props.email, password.value, firstname.value, lastname.value)
+  router.push('/home')
 }
 </script>
 
@@ -70,7 +71,7 @@ const handleRegister = () => {
     </div>
 
     <!-- Firstname and Lastname (side by side) -->
-    <div class="w-100 mt-4 d-flex ga-4">
+    <div class="w-100 d-flex ga-4">
       <div class="flex-1-1">
         <div class="font-weight-medium">
           {{ t('AUTH_PANEL.FIRSTNAME') }}
@@ -104,7 +105,7 @@ const handleRegister = () => {
     </div>
 
     <!-- Password -->
-    <div class="w-100 mt-4">
+    <div class="w-100">
       <div class="font-weight-medium">{{ t('AUTH_PANEL.PASSWORD') }}</div>
       <v-text-field
         class="w-100 mt-2"
@@ -122,7 +123,7 @@ const handleRegister = () => {
     </div>
 
     <!-- Confirm Password -->
-    <div class="w-100 mt-4">
+    <div class="w-100">
       <div class="font-weight-medium">{{ t('AUTH_PANEL.CONFIRM_PASSWORD') }}</div>
       <v-text-field
         class="w-100 mt-2"
@@ -146,7 +147,7 @@ const handleRegister = () => {
     </div>
 
     <!-- Submit button -->
-    <div class="w-100 mt-6">
+    <div class="w-100 mt-2">
       <v-btn
         size="large"
         color="primary"
