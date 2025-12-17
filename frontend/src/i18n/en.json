@@ -20,7 +20,9 @@
   },
   "AUTH_PANEL": {
     "WELCOME": "Welcome !",
+    "WELCOME_BACK": "Welcome back !",
     "ENTER_EMAIL": "Enter your email to continue",
+    "CONNECT_TO_CONTINUE": "Connect to access your habits",
     "EMAIL": "Email",
     "EMAIL_NAME": "name",
     "EMAIL_EXTENSION": "example.com",
@@ -36,6 +38,7 @@
     "PASSWORD_PLACEHOLDER": "••••••••",
     "CONFIRM_PASSWORD": "Confirm password",
     "PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
-    "CREATE_ACCOUNT_BUTTON": "Create an account"
+    "CREATE_ACCOUNT_BUTTON": "Create an account",
+    "CONNECT_BUTTON": "Connect"
   }
 }

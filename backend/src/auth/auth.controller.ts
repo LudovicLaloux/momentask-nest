@@ -11,7 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
+import { LogInDto } from './dto/logIn.dto';
 import { CheckEmailDto } from './dto/check-email.dto';
 
 @Controller('auth')
@@ -25,9 +25,9 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('login')
-  async login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+  @Post('logIn')
+  async logIn(@Body() logInDto: LogInDto) {
+    return this.authService.logIn(logInDto);
   }
 
   @UseGuards(AuthGuard('jwt'))

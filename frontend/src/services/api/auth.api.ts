@@ -2,14 +2,14 @@ import instance from '@/services/api/api'
 import type {
   AuthResponse,
   CheckEmailResponse,
-  LoginDto,
+  LogInDto,
   RegisterDto,
   User,
 } from '@/types/auth.types'
 
 export const register = (data: RegisterDto) => instance.post<AuthResponse>('/auth/register', data)
 
-export const login = (data: LoginDto) => instance.post<AuthResponse>('/auth/login', data)
+export const logIn = (data: LogInDto) => instance.post<AuthResponse>('/auth/logIn', data)
 
 export const getMe = () => instance.get<User>('/auth/me')
 
@@ -18,7 +18,7 @@ export const checkEmail = (email: string) =>
 
 export default {
   register,
-  login,
+  logIn,
   getMe,
   checkEmail,
 }

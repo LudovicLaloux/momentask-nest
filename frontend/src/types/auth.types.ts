@@ -14,7 +14,7 @@ export interface RegisterDto {
   lastname?: string
 }
 
-export interface LoginDto {
+export interface LogInDto {
   email: string
   password: string
 }

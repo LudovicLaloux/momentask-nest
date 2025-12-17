@@ -46,7 +46,7 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <div class="auth-panel-sign-in mx-auto d-flex flex-column align-center">
+  <div class="auth-panel-register mx-auto d-flex flex-column align-center">
     <h1>{{ t('AUTH_PANEL.CREATE_ACCOUNT') }}</h1>
     <p class="mt-2 text-center sign-in-subtitle">{{ t('AUTH_PANEL.START_TRACKING') }}</p>
 
@@ -163,7 +163,7 @@ const handleRegister = async () => {
 </template>
 
 <style lang="css" scoped>
-.auth-panel-sign-in {
+.auth-panel-register {
   min-width: 28rem;
 }
 
