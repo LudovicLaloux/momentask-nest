@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useAuthStore } from '@/stores/auth'
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -9,8 +10,8 @@ const instance = axios.create({
 // add JWT token to each request
 instance.interceptors.request.use(
   function (config) {
-    // get JWT token from localStorage
-    const token = localStorage.getItem('token')
+    const authStore = useAuthStore()
+    const token = authStore.sessionToken
 
     // if a token exists, add it to the Authorization header
     if (token) {

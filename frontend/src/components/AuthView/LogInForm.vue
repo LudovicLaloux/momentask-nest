@@ -61,6 +61,7 @@ const handleLogIn = async () => {
         rounded="lg"
         v-model="password"
         :placeholder="t('AUTH_PANEL.PASSWORD_PLACEHOLDER')"
+        autofocus
         density="compact"
         :type="showPassword ? 'text' : 'password'"
         variant="outlined"

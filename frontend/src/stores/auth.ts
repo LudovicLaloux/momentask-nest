@@ -6,6 +6,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null as User | null,
     sessionToken: localStorage.getItem('session-token') as string | null,
+    isLoading: false,
   }),
   actions: {
     async register(email: string, password: string, firstname?: string, lastname?: string) {
@@ -26,8 +27,19 @@ export const useAuthStore = defineStore('auth', {
       localStorage.removeItem('session-token')
     },
     async getMe() {
-      const { data } = await authApi.getMe()
-      this.user = data
+      console.log('this.sessionToken', this.sessionToken)
+      if (!this.sessionToken) return
+
+      this.isLoading = true
+      try {
+        const { data } = await authApi.getMe()
+        this.user = data
+      } catch (error) {
+        this.logout()
+        throw error
+      } finally {
+        this.isLoading = false
+      }
     },
   },
 })
