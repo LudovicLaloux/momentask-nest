@@ -27,7 +27,6 @@ export const useAuthStore = defineStore('auth', {
       localStorage.removeItem('session-token')
     },
     async getMe() {
-      console.log('this.sessionToken', this.sessionToken)
       if (!this.sessionToken) return
 
       this.isLoading = true

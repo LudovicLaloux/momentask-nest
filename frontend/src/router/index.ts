@@ -42,13 +42,10 @@ router.beforeEach(async (to, from, next) => {
   const isAuthenticated = !!token
 
   if (requiresAuth && !isAuthenticated) {
-    console.log('Redirect to /auth (not authenticated)')
     next('/auth')
   } else if (requiresGuest && isAuthenticated) {
-    console.log('Redirect to /home (already authenticated)')
     next('/home')
   } else {
-    console.log('Allow navigation to', to.path)
     next()
   }
 })

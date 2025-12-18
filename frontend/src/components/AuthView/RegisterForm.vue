@@ -26,7 +26,7 @@ const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 
 // Validation
-const isPasswordValid = computed(() => password.value.length >= 6)
+const isPasswordValid = computed(() => password.value.length >= 8)
 const doPasswordsMatch = computed(() => password.value === confirmPassword.value)
 const isFormValid = computed(() => {
   return (
@@ -118,6 +118,14 @@ const handleRegister = async () => {
         prepend-inner-icon="mdi-lock-outline"
         :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
         @click:append-inner="showPassword = !showPassword"
+        hint="Minimum 8 characters"
+        persistent-hint
+        :error="password !== '' && !isPasswordValid"
+        :error-messages="
+          password !== '' && !isPasswordValid
+            ? ['Password must be at least 8 characters long']
+            : []
+        "
         @keydown.enter="handleRegister"
       />
     </div>
