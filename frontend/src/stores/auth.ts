@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import type { User } from '@/types/auth.types'
 import authApi from '@/services/api/auth.api'
+import { push } from 'notivue'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -10,10 +11,15 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     async register(email: string, password: string, firstname?: string, lastname?: string) {
-      const { data } = await authApi.register({ email, password, firstname, lastname })
-      this.user = data.user
-      this.sessionToken = data.token
-      localStorage.setItem('session-token', data.token)
+      try {
+        const { data } = await authApi.register({ email, password, firstname, lastname })
+        this.user = data.user
+        this.sessionToken = data.token
+        localStorage.setItem('session-token', data.token)
+      } catch (error: any) {
+        push.error(error.message)
+      }
+      return { success: true }
     },
     async logIn(email: string, password: string) {
       try {

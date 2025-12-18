@@ -13,6 +13,12 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+// Notivue
+import { createNotivue } from 'notivue'
+import 'notivue/notifications.css'
+import 'notivue/animations.css'
+import 'notivue/notification-progress.css'
+
 const app = createApp(App)
 
 const vuetify = createVuetify({
@@ -62,9 +68,22 @@ const i18n = createI18n({
   },
 })
 
+const notivue = createNotivue({
+  position: 'top-right',
+  limit: 4,
+  enqueue: true,
+  avoidDuplicates: true,
+  notifications: {
+    global: {
+      duration: 4000,
+    },
+  },
+})
+
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)
 app.use(i18n)
+app.use(notivue)
 
 app.mount('#app')
