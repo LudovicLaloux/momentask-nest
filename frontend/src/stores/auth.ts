@@ -16,10 +16,15 @@ export const useAuthStore = defineStore('auth', {
       localStorage.setItem('session-token', data.token)
     },
     async logIn(email: string, password: string) {
-      const { data } = await authApi.logIn({ email, password })
-      this.user = data.user
-      this.sessionToken = data.token
-      localStorage.setItem('session-token', data.token)
+      try {
+        const { data } = await authApi.logIn({ email, password })
+        this.user = data.user
+        this.sessionToken = data.token
+        localStorage.setItem('session-token', data.token)
+      } catch (error: any) {
+        return { success: false, error: error }
+      }
+      return { success: true }
     },
     logout() {
       this.user = null

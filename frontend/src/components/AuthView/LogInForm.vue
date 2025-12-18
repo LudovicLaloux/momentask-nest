@@ -18,13 +18,19 @@ const emits = defineEmits(['goBack'])
 const password = ref('')
 
 const showPassword = ref(false)
-const isPasswordValid = computed(() => password.value.length >= 6)
+const isPasswordValid = computed(() => password.value.length >= 8)
+const errorMessage = ref('')
 
 const handleLogIn = async () => {
   if (!isPasswordValid.value) return
 
-  await authStore.logIn(props.email, password.value)
-  router.push('/home')
+  const { success, error } = await authStore.logIn(props.email, password.value)
+  if (success) {
+    router.push('/home')
+  }
+  if (error && error.status === 401) {
+    errorMessage.value = t('AUTH_PANEL.INVALID_CREDENTIALS')
+  }
 }
 </script>
 
@@ -67,8 +73,10 @@ const handleLogIn = async () => {
         variant="outlined"
         prepend-inner-icon="mdi-lock-outline"
         :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+        :error="!!errorMessage"
+        :error-messages="errorMessage"
         @click:append-inner="showPassword = !showPassword"
-        @keydown.enter="handleLogIn"
+        @keydown.enter="isPasswordValid ? handleLogIn : null"
       />
     </div>
 
@@ -79,7 +87,7 @@ const handleLogIn = async () => {
         color="primary"
         block
         rounded="lg"
-        :disabled="password.length === 0"
+        :disabled="!isPasswordValid"
         @click="handleLogIn"
       >
         {{ t('AUTH_PANEL.CONNECT_BUTTON') }}

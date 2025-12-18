@@ -39,6 +39,7 @@
     "CONFIRM_PASSWORD": "Confirm password",
     "PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
     "CREATE_ACCOUNT_BUTTON": "Create an account",
-    "CONNECT_BUTTON": "Connect"
+    "CONNECT_BUTTON": "Connect",
+    "INVALID_CREDENTIALS": "Invalid credentials"
   }
 }

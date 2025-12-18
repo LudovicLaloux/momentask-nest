@@ -37,6 +37,13 @@ const isFormValid = computed(() => {
   )
 })
 
+const passwordRules = computed(() => {
+  return [
+    (v: string) =>
+      v.length >= 8 || t('AUTH_PANEL.PASSWORD') + ' must be at least 8 characters long.',
+  ]
+})
+
 const handleRegister = async () => {
   if (!isFormValid.value) return
 
@@ -118,14 +125,7 @@ const handleRegister = async () => {
         prepend-inner-icon="mdi-lock-outline"
         :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
         @click:append-inner="showPassword = !showPassword"
-        hint="Minimum 8 characters"
-        persistent-hint
-        :error="password !== '' && !isPasswordValid"
-        :error-messages="
-          password !== '' && !isPasswordValid
-            ? ['Password must be at least 8 characters long']
-            : []
-        "
+        :rules="passwordRules"
         @keydown.enter="handleRegister"
       />
     </div>
