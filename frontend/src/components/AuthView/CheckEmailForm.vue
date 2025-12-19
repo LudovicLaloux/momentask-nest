@@ -8,6 +8,7 @@ const emits = defineEmits(['checkEmailExists', 'update:modelValue'])
 
 const props = defineProps<{
   modelValue: string
+  isLoading?: boolean
 }>()
 
 const emailRegex =
@@ -43,7 +44,8 @@ const isEmailValid = computed(() => {
         color="primary"
         block
         rounded="lg"
-        :disabled="!isEmailValid"
+        :disabled="!isEmailValid || isLoading"
+        :loading="isLoading"
         @click="emits('checkEmailExists')"
       >
         {{ t('COMMON.CONTINUE') }}

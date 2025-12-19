@@ -101,7 +101,8 @@ const sendForgotPassword = async () => {
         color="primary"
         block
         rounded="lg"
-        :disabled="!isPasswordValid"
+        :disabled="!isPasswordValid || authStore.isLoading"
+        :loading="authStore.isLoading"
         @click="handleLogIn"
       >
         {{ t('AUTH_PANEL.CONNECT_BUTTON') }}

@@ -116,7 +116,8 @@ const handleRegister = async () => {
         color="primary"
         block
         rounded="lg"
-        :disabled="!isFormValid"
+        :disabled="!isFormValid || authStore.isLoading"
+        :loading="authStore.isLoading"
         @click="handleRegister"
       >
         {{ t('AUTH_PANEL.CREATE_ACCOUNT_BUTTON') }}
