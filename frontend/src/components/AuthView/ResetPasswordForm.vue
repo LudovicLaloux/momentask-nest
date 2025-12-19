@@ -89,9 +89,6 @@ const handleReset = async () => {
 </template>
 
 <style scoped>
-.reset-password-form {
-  background: white;
-}
 .reset-password-container {
   min-width: 28rem;
 }

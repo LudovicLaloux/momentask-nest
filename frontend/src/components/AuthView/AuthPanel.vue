@@ -44,10 +44,6 @@ const checkEmailExists = async () => {
 </template>
 
 <style scoped>
-.auth-panel {
-  background: white;
-}
-
 /* Transitions - Consistent with BrandingCarousel */
 .slide-fade-enter-active,
 .slide-fade-leave-active {
