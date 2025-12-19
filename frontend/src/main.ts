@@ -3,8 +3,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import { createI18n } from 'vue-i18n'
-import en from './i18n/en.json'
+import i18n from './i18n'
 
 // Vuetify
 import 'vuetify/styles'
@@ -57,14 +56,6 @@ const vuetify = createVuetify({
         },
       },
     },
-  },
-})
-
-const i18n = createI18n({
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en,
   },
 })
 

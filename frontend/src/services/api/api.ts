@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
+import { push } from 'notivue'
+import { t } from '@/i18n'
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -25,5 +27,14 @@ instance.interceptors.request.use(
     return Promise.reject(error)
   },
 )
+
+instance.interceptors.response.use(undefined, async (error) => {
+  if (error.config?.skipGlobalErrorHandler) {
+    return Promise.reject(error)
+  }
+
+  push.error(t('COMMON.GENERIC_ERROR'))
+  throw error
+})
 
 export default instance

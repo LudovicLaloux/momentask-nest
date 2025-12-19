@@ -2,10 +2,11 @@
   "COMMON": {
     "MOMENTASK": "Momentask",
     "CONTINUE": "Continue",
-    "OR": "Or"
+    "OR": "Or",
+    "GENERIC_ERROR": "An error occurred, please try again"
   },
   "BRANDING_PANEL": {
-    "LICENSE": "2024 Momentask. All rights reserved.",
+    "LICENSE": "2025 Momentask. All rights reserved.",
     "BRANDING_CAROUSEL": {
       "TITLE_1": "Follow your habits",
       "DESCRIPTION_1": "Visualize your daily progress and stay motivated",
@@ -40,6 +41,17 @@
     "PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
     "CREATE_ACCOUNT_BUTTON": "Create an account",
     "CONNECT_BUTTON": "Connect",
-    "INVALID_CREDENTIALS": "Invalid credentials"
+    "INVALID_CREDENTIALS": "Invalid credentials",
+    "PASSWORD_LENGTH_ERROR": "Password must be at least 8 characters",
+    "PASSWORD_HINT": "Minimum 8 characters",
+    "FORGOT_PASSWORD": "Forgot your password?",
+    "FORGOT_PASSWORD_CONFIRMATION": "A password reset link has been sent to your email"
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Reset Your Password",
+    "DESCRIPTION": "Enter your new password below",
+    "NEW_PASSWORD": "New Password",
+    "RESET_PASSWORD_BUTTON": "Reset Password",
+    "SUCCESS_MESSAGE": "Your password has been successfully reset"
   }
 }

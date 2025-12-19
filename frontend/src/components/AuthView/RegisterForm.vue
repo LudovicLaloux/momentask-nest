@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import CreatePassword from './CreatePassword.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -21,10 +22,6 @@ const lastname = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 
-// Password visibility toggles
-const showPassword = ref(false)
-const showConfirmPassword = ref(false)
-
 // Validation
 const isPasswordValid = computed(() => password.value.length >= 8)
 const doPasswordsMatch = computed(() => password.value === confirmPassword.value)
@@ -35,13 +32,6 @@ const isFormValid = computed(() => {
     password.value !== '' &&
     confirmPassword.value !== ''
   )
-})
-
-const passwordRules = computed(() => {
-  return [
-    (v: string) =>
-      v.length >= 8 || t('AUTH_PANEL.PASSWORD') + ' must be at least 8 characters long.',
-  ]
 })
 
 const handleRegister = async () => {
@@ -111,48 +101,13 @@ const handleRegister = async () => {
       </div>
     </div>
 
-    <!-- Password -->
-    <div class="w-100">
-      <div class="font-weight-medium">{{ t('AUTH_PANEL.PASSWORD') }}</div>
-      <v-text-field
-        class="w-100 mt-2"
-        rounded="lg"
-        v-model="password"
-        :placeholder="t('AUTH_PANEL.PASSWORD_PLACEHOLDER')"
-        density="compact"
-        :type="showPassword ? 'text' : 'password'"
-        variant="outlined"
-        prepend-inner-icon="mdi-lock-outline"
-        :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-        @click:append-inner="showPassword = !showPassword"
-        :rules="passwordRules"
-        @keydown.enter="handleRegister"
-      />
-    </div>
-
-    <!-- Confirm Password -->
-    <div class="w-100">
-      <div class="font-weight-medium">{{ t('AUTH_PANEL.CONFIRM_PASSWORD') }}</div>
-      <v-text-field
-        class="w-100 mt-2"
-        rounded="lg"
-        v-model="confirmPassword"
-        :placeholder="t('AUTH_PANEL.PASSWORD_PLACEHOLDER')"
-        density="compact"
-        :type="showConfirmPassword ? 'text' : 'password'"
-        variant="outlined"
-        prepend-inner-icon="mdi-lock-outline"
-        :append-inner-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
-        @click:append-inner="showConfirmPassword = !showConfirmPassword"
-        :error="confirmPassword !== '' && !doPasswordsMatch"
-        :error-messages="
-          confirmPassword !== '' && !doPasswordsMatch
-            ? [t('AUTH_PANEL.PASSWORDS_DO_NOT_MATCH')]
-            : []
-        "
-        @keydown.enter="handleRegister"
-      />
-    </div>
+    <CreatePassword
+      :password="password"
+      :confirmPassword="confirmPassword"
+      @updatePassword="password = $event"
+      @updateConfirmPassword="confirmPassword = $event"
+      @handle-submit="handleRegister"
+    />
 
     <!-- Submit button -->
     <div class="w-100 mt-2">

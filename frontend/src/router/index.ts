@@ -11,6 +11,12 @@ const router = createRouter({
       meta: { requiresGuest: true },
     },
     {
+      path: '/reset-password/:token',
+      name: 'reset-password',
+      component: () => import('@/views/ResetPasswordView.vue'),
+      meta: { requiresGuest: true },
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import('@/views/HomeView.vue'),

@@ -11,14 +11,10 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     async register(email: string, password: string, firstname?: string, lastname?: string) {
-      try {
-        const { data } = await authApi.register({ email, password, firstname, lastname })
-        this.user = data.user
-        this.sessionToken = data.token
-        localStorage.setItem('session-token', data.token)
-      } catch (error: any) {
-        push.error(error.message)
-      }
+      const { data } = await authApi.register({ email, password, firstname, lastname })
+      this.user = data.user
+      this.sessionToken = data.token
+      localStorage.setItem('session-token', data.token)
       return { success: true }
     },
     async logIn(email: string, password: string) {

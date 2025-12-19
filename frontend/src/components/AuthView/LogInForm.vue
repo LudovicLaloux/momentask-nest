@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import { push } from 'notivue'
+import { useAuthStore } from '@/stores/auth'
+import { forgotPassword } from '@/services/api/auth.api'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -31,6 +33,11 @@ const handleLogIn = async () => {
   if (error && error.status === 401) {
     errorMessage.value = t('AUTH_PANEL.INVALID_CREDENTIALS')
   }
+}
+
+const sendForgotPassword = async () => {
+  await forgotPassword({ email: props.email })
+  push.success(t('AUTH_PANEL.FORGOT_PASSWORD_CONFIRMATION'))
 }
 </script>
 
@@ -61,7 +68,14 @@ const handleLogIn = async () => {
 
     <!-- Password -->
     <div class="w-100">
-      <div class="font-weight-medium">{{ t('AUTH_PANEL.PASSWORD') }}</div>
+      <div class="d-flex justify-space-between align-center">
+        <div class="font-weight-medium">{{ t('AUTH_PANEL.PASSWORD') }}</div>
+        <span
+          class="text-primary text-decoration-none text-caption cursor-pointer"
+          @click="sendForgotPassword"
+          >{{ t('AUTH_PANEL.FORGOT_PASSWORD') }}</span
+        >
+      </div>
       <v-text-field
         class="w-100 mt-2"
         rounded="lg"

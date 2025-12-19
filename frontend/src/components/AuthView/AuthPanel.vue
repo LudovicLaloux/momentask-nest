@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import AuthPanelCheckEmail from './CheckEmailForm.vue'
+import CheckEmailForm from './CheckEmailForm.vue'
 import LogInForm from './LogInForm.vue'
 import RegisterForm from './RegisterForm.vue'
 import { checkEmail } from '@/services/api/auth.api'
@@ -16,7 +16,7 @@ const checkEmailExists = async () => {
 
 <template>
   <div class="auth-panel d-flex flex-column justify-center">
-    <AuthPanelCheckEmail
+    <CheckEmailForm
       v-if="userAlreadyExists === null"
       v-model="email"
       @checkEmailExists="checkEmailExists"
