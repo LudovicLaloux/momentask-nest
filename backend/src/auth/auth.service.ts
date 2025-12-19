@@ -3,6 +3,7 @@ import {
   Injectable,
   UnauthorizedException,
   ConflictException,
+  Logger,
 } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { LogInDto } from './dto/logIn.dto';
@@ -17,6 +18,8 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
   ) {}
+
+  private readonly logger = new Logger(AuthService.name, { timestamp: true });
 
   async register(
     registerDto: RegisterDto,
@@ -80,9 +83,9 @@ export class AuthService {
 
     // In dev mode, display the link in the console
     const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
-    console.log('\n🔐 PASSWORD RESET LINK for', email);
-    console.log('   Link:', resetLink);
-    console.log('   Expires in: 1 hour\n');
+    this.logger.log('\n🔐 PASSWORD RESET LINK for', email);
+    this.logger.log('   Link:', resetLink);
+    this.logger.log('   Expires in: 1 hour\n');
 
     // TODO: later, send email here
     // await this.emailService.sendPasswordResetEmail(user.email, resetLink);
