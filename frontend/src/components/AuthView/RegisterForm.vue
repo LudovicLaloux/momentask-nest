@@ -38,7 +38,7 @@ const handleRegister = async () => {
   if (!isFormValid.value) return
 
   await authStore.register(props.email, password.value, firstname.value, lastname.value)
-  router.push('/home')
+  router.push('/dashboard')
 }
 </script>
 

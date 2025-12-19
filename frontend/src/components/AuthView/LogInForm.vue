@@ -28,7 +28,7 @@ const handleLogIn = async () => {
 
   const { success, error } = await authStore.logIn(props.email, password.value)
   if (success) {
-    router.push('/home')
+    router.push('/dashboard')
   }
   if (error && error.status === 401) {
     errorMessage.value = t('AUTH_PANEL.INVALID_CREDENTIALS')

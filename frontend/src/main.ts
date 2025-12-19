@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, h } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -18,6 +18,23 @@ import 'notivue/notifications.css'
 import 'notivue/animations.css'
 import 'notivue/notification-progress.css'
 
+// Icons (mdi, Lucide)
+import { mdi } from 'vuetify/iconsets/mdi'
+import * as LucideIcons from 'lucide-vue-next'
+const lucideIconSet = {
+  component: (props: any) => {
+    const iconName =
+      typeof props.icon === 'string'
+        ? props.icon
+            .split('-')
+            .map((s: any) => s.charAt(0).toUpperCase() + s.slice(1))
+            .join('')
+        : props.icon
+    const LucideIcon = (LucideIcons as any)[iconName]
+    return typeof LucideIcon === 'function' ? h(LucideIcon, { ...props }) : null
+  },
+}
+
 const app = createApp(App)
 
 const vuetify = createVuetify({
@@ -25,6 +42,7 @@ const vuetify = createVuetify({
   directives,
   icons: {
     defaultSet: 'mdi',
+    sets: { lucide: lucideIconSet, mdi },
   },
   theme: {
     defaultTheme: 'light',
@@ -38,7 +56,7 @@ const vuetify = createVuetify({
           warning: '#F59E0B',
           error: '#EF4444',
           info: '#3B82F6',
-          background: '#F0FDFA',
+          background: '#F3F4F6',
           surface: '#FFFFFF',
         },
       },

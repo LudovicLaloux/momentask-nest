@@ -53,5 +53,42 @@
     "NEW_PASSWORD": "New Password",
     "RESET_PASSWORD_BUTTON": "Reset Password",
     "SUCCESS_MESSAGE": "Your password has been successfully reset"
+  },
+  "LAYOUT": {
+    "APP_NAME": "Habit Tracker",
+    "DASHBOARD": "Dashboard",
+    "HABITS": "Habits",
+    "LISTS": "Lists",
+    "PROFILE": "Profile",
+    "SETTINGS": "Settings",
+    "THEME": "Theme",
+    "LOGOUT": "Logout",
+    "DARK_MODE": "Dark Mode",
+    "LIGHT_MODE": "Light Mode"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "SUBTITLE": "Track your daily habits",
+    "ADD_HABIT": "Add",
+    "TOTAL_SCORE": "Total Score",
+    "BEST_STREAK": "Best Streak",
+    "TODAY": "Today",
+    "ACTIVE_HABITS": "Active Habits",
+    "POINTS_THIS_WEEK": "points this week",
+    "PERSONAL_RECORD": "personal record",
+    "HABITS_COUNT": "habits",
+    "IN_PROGRESS": "in progress",
+    "GLOBAL_SCORE": "Global Score",
+    "MY_HABITS": "My Habits"
+  },
+  "HABITS": {
+    "TITLE": "Habits",
+    "SUBTITLE": "Manage all your habits",
+    "NO_HABITS": "No habits yet",
+    "CREATE_FIRST_HABIT": "Create your first habit to start tracking"
+  },
+  "PROFILE": {
+    "TITLE": "Profile",
+    "SUBTITLE": "Manage your account settings"
   }
 }

@@ -17,14 +17,35 @@ const router = createRouter({
       meta: { requiresGuest: true },
     },
     {
-      path: '/home',
-      name: 'home',
-      component: () => import('@/views/HomeView.vue'),
-      meta: { requiresAuth: true },
-    },
-    {
       path: '/',
-      redirect: '/home',
+      component: () => import('@/components/Layout/AppLayout.vue'),
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          redirect: '/dashboard',
+        },
+        {
+          path: 'dashboard',
+          name: 'dashboard',
+          component: () => import('@/views/DashboardView.vue'),
+        },
+        {
+          path: 'habits',
+          name: 'habits',
+          component: () => import('@/views/HabitsView.vue'),
+        },
+        {
+          path: 'lists',
+          name: 'lists',
+          component: () => import('@/views/HomeView.vue'), // Placeholder for now
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('@/views/ProfileView.vue'),
+        },
+      ],
     },
   ],
 })
@@ -50,7 +71,7 @@ router.beforeEach(async (to, from, next) => {
   if (requiresAuth && !isAuthenticated) {
     next('/auth')
   } else if (requiresGuest && isAuthenticated) {
-    next('/home')
+    next('/dashboard')
   } else {
     next()
   }
